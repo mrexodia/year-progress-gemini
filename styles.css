@@ -1,0 +1,526 @@
+/* --- THEMES --- */
+body[data-theme="sakura"] {
+    --bg-color: #FFF8F0;
+    --dot-filled: #FFB7C5;
+    --dot-filled-grad: #FFD1BA;
+    --dot-empty: #F9EBEA;
+    --dot-current-glow: #FFB7C5;
+    --text-color: #5C5555;
+    --accent-color: #FFB7C5;
+}
+
+body[data-theme="mint-dream"] {
+    --bg-color: #F0FFF4;
+    --dot-filled: #98E4C9;
+    --dot-filled-grad: #7BC9C9;
+    --dot-empty: #E0F2F1;
+    --dot-current-glow: #98E4C9;
+    --text-color: #4A6B6B;
+    --accent-color: #98E4C9;
+}
+
+body[data-theme="lavender-haze"] {
+    --bg-color: #F8F4FF;
+    --dot-filled: #C9B1FF;
+    --dot-filled-grad: #FFD6E8;
+    --dot-empty: #EAE6FF;
+    --dot-current-glow: #C9B1FF;
+    --text-color: #6B5B7B;
+    --accent-color: #C9B1FF;
+}
+
+body[data-theme="honey-morning"] {
+    --bg-color: #FFFBF0;
+    --dot-filled: #FFCCB3;
+    --dot-filled-grad: #FFF2C9;
+    --dot-empty: #FFF2E6;
+    --dot-current-glow: #FFCCB3;
+    --text-color: #6B5344;
+    --accent-color: #FFCCB3;
+}
+
+:root {
+    --font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    transition: background-color 0.5s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- ANIMATIONS & POLISH --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#app {
+    animation: fadeIn 0.5s ease-out;
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Overlays */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Modals */
+.modal {
+    background: var(--bg-color);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    transform: scale(1);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.overlay.hidden .modal {
+    transform: scale(0.9);
+}
+
+#settings-menu { z-index: 103; }
+#note-overlay { z-index: 102; }
+#marker-popup-overlay { z-index: 101; }
+
+
+/* Pulsing today with border */
+@keyframes pulseBorder {
+    0% { transform: scale(1); box-shadow: 0 0 0 0px var(--dot-current-glow); outline: 2px solid var(--dot-current-glow); outline-offset: 2px; }
+    50% { transform: scale(1.05); box-shadow: 0 0 10px 2px var(--dot-current-glow); outline: 3px solid var(--dot-current-glow); outline-offset: 4px; }
+    100% { transform: scale(1); box-shadow: 0 0 0 0px var(--dot-current-glow); outline: 2px solid var(--dot-current-glow); outline-offset: 2px; }
+}
+
+.today {
+    animation: pulseBorder 2s infinite ease-in-out;
+    z-index: 5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .today {
+      animation: none;
+      outline: 3px solid var(--dot-current-glow);
+  }
+}
+
+/* END ANIMATIONS */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    width: 100%;
+}
+
+.header-left, .header-right {
+    flex: 1;
+}
+
+.header-main {
+    text-align: center;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#settings-btn {
+    padding: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+#settings-btn:active {
+    transform: rotate(45deg);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+#progress-display {
+    font-size: 1rem;
+    margin: 0.2rem 0 0 0;
+    opacity: 0.7;
+    font-weight: 600;
+}
+
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin: 1.5rem auto;
+    width: 100%;
+}
+
+.day-dot {
+    width: 100%;
+    position: relative;
+    aspect-ratio: 1 / 1; 
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    font-size: min(5.5vw, 24px);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.05);
+}
+
+.day-dot:active {
+    transform: scale(0.9) !important;
+}
+
+.emoji-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+/* The note indicator dot */
+.day-dot::after {
+    content: '';
+    position: absolute;
+    top: 12%;
+    right: 12%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    opacity: 0.4;
+    display: none;
+    z-index: 2;
+}
+
+.day-dot.has-note::after {
+    display: block;
+}
+
+.past {
+    background: linear-gradient(135deg, var(--dot-filled), var(--dot-filled-grad));
+}
+
+/* Ensure marked dots override theme gradients */
+.day-dot.marked {
+    background: none;
+}
+
+.future {
+    background-color: var(--dot-empty);
+    opacity: 0.6;
+}
+
+.message-container {
+    margin-top: 1.5rem;
+    min-height: 50px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Add Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+/* Popup Styles */
+#marker-popup h2 {
+    margin: 0 0 20px 0;
+    font-size: 1.3rem;
+}
+
+.popup-section {
+    margin-bottom: 20px;
+}
+
+.popup-section h3 {
+    margin: 0 0 12px 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+#color-options, #emoji-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.color-option {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.color-option:hover {
+    transform: scale(1.15);
+}
+
+.color-option.selected {
+    border-color: var(--text-color);
+    transform: scale(1.1);
+}
+
+.emoji-option {
+    font-size: 26px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoji-option:hover {
+    background-color: rgba(0,0,0,0.05);
+    transform: scale(1.2);
+}
+
+.emoji-option.selected {
+    background-color: rgba(0,0,0,0.1);
+    transform: scale(1.1);
+}
+
+#marker-popup button, #note-actions button, #settings-menu button {
+    background-color: var(--dot-empty);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#marker-popup button:hover, #note-actions button:hover, #settings-menu button:hover {
+    filter: brightness(0.95);
+}
+
+#marker-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Note Editor Styles */
+#note-editor h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+}
+
+#note-input {
+    width: 100%;
+    height: 120px;
+    border: 2px solid var(--dot-empty);
+    border-radius: 12px;
+    padding: 12px;
+    font-family: var(--font-family);
+    margin-bottom: 15px;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+    background: rgba(255,255,255,0.3);
+}
+
+#note-input:focus {
+    border-color: var(--accent-color);
+}
+
+#note-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#note-display {
+    background: rgba(0,0,0,0.03);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.95rem;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border-left: 4px solid var(--accent-color);
+}
+
+#error-message {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+#error-message.success {
+    color: #270;
+    background-color: #DFF2BF;
+}
+
+/* Settings Menu Layout */
+.button-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.button-row button {
+    flex: 1;
+    padding: 12px 5px !important;
+    font-size: 0.9rem !important;
+}
+
+.settings-section {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.settings-section h3 {
+    margin: 0 0 15px 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+}
+
+#theme-picker {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+#emoji-settings-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.emoji-setting-item {
+    background: rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 1.2rem;
+}
+
+.remove-emoji-btn {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 0.8rem !important;
+    color: #ff4d4d !important;
+    cursor: pointer;
+    width: auto !important;
+}
+
+.emoji-add-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+#new-emoji-input {
+    width: 50px;
+    text-align: center;
+    border: 2px solid var(--dot-empty);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    padding: 4px;
+    background: rgba(255,255,255,0.3);
+}
+
+#add-emoji-btn {
+    padding: 4px 12px !important;
+    width: auto !important;
+}
+
+.theme-option {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.theme-option:hover {
+    transform: scale(1.1);
+}
+
+.theme-option.selected {
+    transform: scale(1.1);
+}
+
+.theme-option.selected::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; 
+    font-size: 20px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Year Progress</title>
-    <link rel="stylesheet" href="styles.v3.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#FFF8F0">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
@@ -38,9 +38,21 @@
                     </div>
                 </div>
                 <div class="settings-section">
+                    <h3>Custom Emojis</h3>
+                    <div id="emoji-settings-list">
+                        <!-- Emoji items with remove buttons -->
+                    </div>
+                    <div class="emoji-add-row">
+                        <input type="text" id="new-emoji-input" placeholder="✨" maxlength="2">
+                        <button id="add-emoji-btn">Add</button>
+                    </div>
+                </div>
+                <div class="settings-section">
                     <h3>Data</h3>
-                    <button id="export-btn">Download Backup</button>
-                    <button id="import-btn">Restore from Backup</button>
+                    <div class="button-row">
+                        <button id="export-btn">Backup</button>
+                        <button id="import-btn">Restore</button>
+                    </div>
                 </div>
                 <button id="close-settings">Close</button>
             </div>
@@ -80,7 +92,7 @@
             </div>
         </div>
     </div>
-    <script src="app.v3.js"></script>
+    <script src="app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

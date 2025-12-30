@@ -1,14 +1,14 @@
-const CACHE_NAME = 'year-progress-v5';
+const CACHE_NAME = 'year-progress-v19';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/styles.v3.css',
-    '/app.v3.js',
+    '/styles.css',
+    '/app.js',
     '/manifest.json',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
     '/icons/apple-touch-icon.png',
-    'https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap'
+    'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap'
 ];
 
 // Install: Open cache and add core assets
