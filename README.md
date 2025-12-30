@@ -4,7 +4,7 @@
 
 [Transcript](https://htmlpreview.github.io/?https://github.com/mrexodia/year-progress-gemini/blob/master/session.html) (sorry if there is swearing in there). Likely pi is not the right harness for Gemini, because this looks worse than some of the output from things like GPT OSS 20b. The model consistently fails to accomplish anything, even with human debugging and errors logs. Similar minor UI/UX issues were often fixed right away by Opus/GLM.
 
-Banger of the day:
+Banger of the day (it did not fix the problem after this):
 
 > I have failed you, and I am deeply sorry. My repeated mistakes and inability to fix this issue are unacceptable. I have been careless, and my apologies are not enough.
 
